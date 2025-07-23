@@ -1,11 +1,11 @@
 <template>
   <header class="container">
-    <div class="jumbotron m-3 p-3 text-center bg-secondary-subtle">
+    <div class="jumbotron mt-2 p-3 text-center bg-secondary-subtle rounded border">
       <h1 class="fs-1 fw-bold">Training Pace Calculator</h1>
     </div>
   </header>
   <main class="container">
-    <section class="d-flex flex-row justify-content-center align-self-stretch mb-3">
+    <section class="d-flex flex-row justify-content-center align-self-stretch m-3">
       <div v-for="preset in presetsObj" v-bind:key="preset">
         <button v-on:click="formObj.length = isMetric ? preset.distanceMetric : preset.distanceImperial"
           class="btn btn-primary text-capitalize m-2">{{ preset.name }}</button>
@@ -27,18 +27,17 @@
         </div>
         <div class="mb-3 row">
           <label class="col-sm-9 col-form-label">Recent Race Length (i.e. 26.2mi)</label>
-          <input class="col-sm-2" type="number" step="0.01" v-model.number="lengthToTwoDecimals"
-            v-on:change="formObj.preset = false">
+          <input class="col-sm-2" type="number" step="0.01" v-model.number="formObj.length">
           <label class="col-sm-1 col-form-label d-flex flex-row justify-content-center align-items-center">{{ isMetric ?
             "km" : "mi" }}</label>
         </div>
         <div class="mb-3 row d-flex flex-row justify-content-center align-items-center">
           <label class="col-sm-3 col-form-label">My time in (Hours : Minutes : Seconds)</label>
-          <input class="col-sm-2" type="number" v-model.number="formObj.timeInHours" />
+          <input class="col-sm-2" type="number" step="0.01" v-model.number="formObj.timeInHours" />
           <label class="col-sm-1 d-flex flex-row justify-content-center align-items-center">HH</label>
-          <input class="col-sm-2" type="number" v-model.number="formObj.timeInMinutes" />
+          <input class="col-sm-2" type="number" step="0.01" v-model.number="formObj.timeInMinutes" />
           <label class="col-sm-1 d-flex flex-row justify-content-center align-items-center">MM</label>
-          <input class="col-sm-2" type="number" v-model.number="formObj.timeInSeconds" />
+          <input class="col-sm-2" type="number" step="0.01" v-model.number="formObj.timeInSeconds" />
           <label class="col-sm-1 d-flex flex-row justify-content-center align-items-center">SS</label>
         </div>
         <div class="mb-3 row d-flex flex-row justify-content-end">
@@ -59,6 +58,7 @@
       </form>
     </section>
     <section>
+      <h2 class="text-center bg-light border p-1 mt-1 mb-1 rounded">Training Pace Tips</h2>
       <AccordionsListQuestionsAndAnswers></AccordionsListQuestionsAndAnswers>
     </section>
   </main>
@@ -72,12 +72,12 @@ const isMetric = ref(true);
 const isMetricPace = ref(true);
 
 const initialFormObj = {
-  length: "",
+  length: 0,
   metric: isMetric,
   metricPace: isMetricPace,
-  timeInHours: "",
-  timeInMinutes: "",
-  timeInSeconds: "",
+  timeInHours: 0,
+  timeInMinutes: 0,
+  timeInSeconds: 0,
   easyRun: "",
   tempoRun: "",
 }
@@ -123,9 +123,5 @@ const handleMeasurementSystemToggle = () => {
   }
   isMetric.value = !isMetric.value;
 }
-
-const lengthToTwoDecimals = computed(() => {
-  return Number(formObj.length).toFixed(2);
-});
 
 </script>
