@@ -27,18 +27,18 @@
         </div>
         <div class="mb-3 row">
           <label class="col-sm-9 col-form-label">Recent Race Length (i.e. 26.2mi)</label>
-          <input class="col-sm-2" type="number" step="0.01" v-model="formObj.length"
+          <input class="col-sm-2" type="number" step="0.01" v-model.number="lengthToTwoDecimals"
             v-on:change="formObj.preset = false">
           <label class="col-sm-1 col-form-label d-flex flex-row justify-content-center align-items-center">{{ isMetric ?
             "km" : "mi" }}</label>
         </div>
         <div class="mb-3 row d-flex flex-row justify-content-center align-items-center">
           <label class="col-sm-3 col-form-label">My time in (Hours : Minutes : Seconds)</label>
-          <input class="col-sm-2" type="number" v-model="formObj.timeInHours" />
+          <input class="col-sm-2" type="number" v-model.number="formObj.timeInHours" />
           <label class="col-sm-1 d-flex flex-row justify-content-center align-items-center">HH</label>
-          <input class="col-sm-2" type="number" v-model="formObj.timeInMinutes" />
+          <input class="col-sm-2" type="number" v-model.number="formObj.timeInMinutes" />
           <label class="col-sm-1 d-flex flex-row justify-content-center align-items-center">MM</label>
-          <input class="col-sm-2" type="number" v-model="formObj.timeInSeconds" />
+          <input class="col-sm-2" type="number" v-model.number="formObj.timeInSeconds" />
           <label class="col-sm-1 d-flex flex-row justify-content-center align-items-center">SS</label>
         </div>
         <div class="mb-3 row d-flex flex-row justify-content-end">
@@ -123,4 +123,9 @@ const handleMeasurementSystemToggle = () => {
   }
   isMetric.value = !isMetric.value;
 }
+
+const lengthToTwoDecimals = computed(() => {
+  return Number(formObj.length).toFixed(2);
+});
+
 </script>
