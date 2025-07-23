@@ -12,7 +12,7 @@
       </div>
     </section>
     <section class="border">
-      <form class="p-3">
+      <form class="p-3" v-on:click.prevent="">
         <div class="mb-3 row d-flex flex-row justify-content-end">
           <label
             class="col-sm-2 col-form-label d-flex flex-row justify-content-center align-items-center text-uppercase">Units</label>
@@ -33,12 +33,24 @@
         </div>
         <div class="mb-3 row d-flex flex-row justify-content-center align-items-center">
           <label class="col-sm-3 col-form-label">My time in (Hours : Minutes : Seconds)</label>
-          <input class="col-sm-2" type="number" />
+          <input class="col-sm-2" type="number" v-model="formObj.timeInHours"/>
           <label class="col-sm-1 d-flex flex-row justify-content-center align-items-center">HH</label>
-          <input class="col-sm-2" type="number" />
+          <input class="col-sm-2" type="number" v-model="formObj.timeInMinutes"/>
           <label class="col-sm-1 d-flex flex-row justify-content-center align-items-center">MM</label>
-          <input class="col-sm-2" type="number" />
+          <input class="col-sm-2" type="number" v-model="formObj.timeInSeconds"/>
           <label class="col-sm-1 d-flex flex-row justify-content-center align-items-center">SS</label>
+        </div>
+        <div class="mb-3 row d-flex flex-row justify-content-end">
+          <label
+            class="col-sm-2 col-form-label d-flex flex-row justify-content-center align-items-center text-capitalize">Display Training Pace in: </label>
+          <button v-on:click="isMetricPace = !isMetricPace" v-if="isMetricPace" type="button"
+            class="btn btn-light col-sm-2 border">min/km&nbsp;<span class="badge text-bg-secondary">metric</span>&nbsp;
+            <IconToggle></IconToggle>
+          </button>
+          <button v-on:click="isMetricPace = !isMetricPace" v-else type="button"
+            class="btn btn-light col-sm-2 border">min/mi&nbsp;<span class="badge text-bg-secondary">imperial</span>&nbsp;
+            <IconToggle></IconToggle>
+          </button>
         </div>
       </form>
     </section>
@@ -49,10 +61,12 @@ import { ref, reactive, computed } from 'vue'
 import IconToggle from './components/icons/IconToggle.vue';
 
 const isMetric = ref(true);
+const isMetricPace = ref(true);
 
 const initialFormObj = {
   length: "",
   metric: isMetric,
+  metricPace: isMetricPace,
   timeInHours: "",
   timeInMinutes: "",
   timeInSeconds: "",
