@@ -123,5 +123,4 @@ const handleMeasurementSystemToggle = () => {
   }
   isMetric.value = !isMetric.value;
 }
-
 </script>
