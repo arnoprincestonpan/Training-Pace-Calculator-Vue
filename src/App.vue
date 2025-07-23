@@ -47,9 +47,9 @@
             Training Pace in: </label>
           <div class="col-sm-4 d-flex flex-row justify-content-end">
             <button @:click="isMetricPace = !isMetricPace" class="btn btn-light col-sm border" type="button">
-              {{ isMetricPace? "min/km" : "min/mi" }}&nbsp;
+              {{ isMetricPace ? "min/km" : "min/mi" }}&nbsp;
               <span class="badge text-bg-secondary">
-                {{ isMetricPace? "metric" : "imperial" }}
+                {{ isMetricPace ? "metric" : "imperial" }}
               </span>
               <IconToggle></IconToggle>
             </button>
@@ -58,11 +58,15 @@
         </div>
       </form>
     </section>
+    <section>
+      <AccordionsListQuestionsAndAnswers></AccordionsListQuestionsAndAnswers>
+    </section>
   </main>
 </template>
 <script setup>
 import { ref, reactive, computed } from 'vue'
 import IconToggle from './components/icons/IconToggle.vue';
+import AccordionsListQuestionsAndAnswers from './components/AccordionsListQuestionsAndAnswers.vue';
 
 const isMetric = ref(true);
 const isMetricPace = ref(true);
