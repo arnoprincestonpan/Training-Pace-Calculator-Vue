@@ -27,30 +27,34 @@
         </div>
         <div class="mb-3 row">
           <label class="col-sm-9 col-form-label">Recent Race Length (i.e. 26.2mi)</label>
-          <input class="col-sm-2" type="number" step="0.01" v-model="formObj.length" v-on:change="formObj.preset = false">
+          <input class="col-sm-2" type="number" step="0.01" v-model="formObj.length"
+            v-on:change="formObj.preset = false">
           <label class="col-sm-1 col-form-label d-flex flex-row justify-content-center align-items-center">{{ isMetric ?
             "km" : "mi" }}</label>
         </div>
         <div class="mb-3 row d-flex flex-row justify-content-center align-items-center">
           <label class="col-sm-3 col-form-label">My time in (Hours : Minutes : Seconds)</label>
-          <input class="col-sm-2" type="number" v-model="formObj.timeInHours"/>
+          <input class="col-sm-2" type="number" v-model="formObj.timeInHours" />
           <label class="col-sm-1 d-flex flex-row justify-content-center align-items-center">HH</label>
-          <input class="col-sm-2" type="number" v-model="formObj.timeInMinutes"/>
+          <input class="col-sm-2" type="number" v-model="formObj.timeInMinutes" />
           <label class="col-sm-1 d-flex flex-row justify-content-center align-items-center">MM</label>
-          <input class="col-sm-2" type="number" v-model="formObj.timeInSeconds"/>
+          <input class="col-sm-2" type="number" v-model="formObj.timeInSeconds" />
           <label class="col-sm-1 d-flex flex-row justify-content-center align-items-center">SS</label>
         </div>
         <div class="mb-3 row d-flex flex-row justify-content-end">
           <label
-            class="col-sm-2 col-form-label d-flex flex-row justify-content-center align-items-center text-capitalize">Display Training Pace in: </label>
-          <button v-on:click="isMetricPace = !isMetricPace" v-if="isMetricPace" type="button"
-            class="btn btn-light col-sm-2 border">min/km&nbsp;<span class="badge text-bg-secondary">metric</span>&nbsp;
-            <IconToggle></IconToggle>
-          </button>
-          <button v-on:click="isMetricPace = !isMetricPace" v-else type="button"
-            class="btn btn-light col-sm-2 border">min/mi&nbsp;<span class="badge text-bg-secondary">imperial</span>&nbsp;
-            <IconToggle></IconToggle>
-          </button>
+            class="col-sm-8 col-form-label d-flex flex-row justify-content-end align-items-center text-capitalize">Display
+            Training Pace in: </label>
+          <div class="col-sm-4 d-flex flex-row justify-content-end">
+            <button @:click="isMetricPace = !isMetricPace" class="btn btn-light col-sm border" type="button">
+              {{ isMetricPace? "min/km" : "min/mi" }}&nbsp;
+              <span class="badge text-bg-secondary">
+                {{ isMetricPace? "metric" : "imperial" }}
+              </span>
+              <IconToggle></IconToggle>
+            </button>
+            <button class="col-sm btn btn-success">Calculate</button>
+          </div>
         </div>
       </form>
     </section>
@@ -106,8 +110,8 @@ const presetsObj = computed(() => [
 ])
 
 const handleMeasurementSystemToggle = () => {
-  if(formObj.length){
-    if(isMetric.value){
+  if (formObj.length) {
+    if (isMetric.value) {
       formObj.length = formObj.length / 1.609
     } else {
       formObj.length = formObj.length * 1.609
