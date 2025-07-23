@@ -7,7 +7,7 @@
   <main class="container">
     <section class="d-flex flex-row justify-content-center align-self-stretch mb-3">
       <div v-for="preset in presetsObj" v-bind:key="preset">
-        <button class="btn btn-primary text-capitalize m-2">{{ preset.name }}</button>
+        <button v-on:click="formObj.length = preset.distance" class="btn btn-primary text-capitalize m-2">{{ preset.name }}</button>
       </div>
     </section>
     <section class="border">
@@ -15,10 +15,10 @@
         <div class="mb-3 row d-flex flex-row justify-content-end">
           <label
             class="col-sm-2 col-form-label d-flex flex-row justify-content-center align-items-center text-uppercase">Units</label>
-          <button type="button" class="btn btn-light col-sm-2 border">
+          <button v-on:click="isMetric = true" type="button" class="btn btn-light col-sm-2 border">
             Metric <span class="badge text-bg-secondary">km</span>
           </button>
-          <button type="button" class="btn btn-light col-sm-2 border">
+          <button v-on:click="isMetric = false" type="button" class="btn btn-light col-sm-2 border">
             Imperial <span class="badge text-bg-secondary">mi</span>
           </button>
         </div>
