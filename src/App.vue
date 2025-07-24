@@ -45,7 +45,7 @@
             class="col-sm-8 col-form-label d-flex flex-row justify-content-end align-items-center text-capitalize">Display
             Training Pace in: </label>
           <div class="col-sm-4 d-flex flex-row justify-content-end">
-            <button @:click="isMetricPace = !isMetricPace" class="btn btn-light col-sm border" type="button">
+            <button @:click="handleMeasurementDisplayToggle" class="btn btn-light col-sm border" type="button">
               {{ isMetricPace ? "min/km" : "min/mi" }}&nbsp;
               <span class="badge text-bg-secondary">
                 {{ isMetricPace ? "metric" : "imperial" }}
@@ -57,7 +57,7 @@
         </div>
       </form>
     </section>
-    <section>
+    <section v-if="formObj.easyRun !== ''">
       <div class="row mt-1">
         <div class="col-md-4" v-for="(placeHolderPace, index) in placeHolderPaces" :key="index">
           <CardPaceResult class="col mt-1 mb-1" :title="placeHolderPace.name" :item="placeHolderPace.pace"></CardPaceResult>
@@ -134,11 +134,21 @@ const handleMeasurementSystemToggle = () => {
       formObj.length = formObj.length * 1.609
     }
   }
+  if(formObj.easyRun !== ""){
+    handleCalculation();
+  }
   isMetric.value = !isMetric.value;
 }
 
+const handleMeasurementDisplayToggle = () => {
+  isMetricPace.value = !isMetricPace.value
+  handleMeasurementSystemToggle()
+}
+
 const handleCalculation = () => {
+  if(formObj.length == "") return
   const runDurationInSeconds = formObj.timeInHours * 3600 + formObj.timeInMinutes * 60 + formObj.timeInSeconds
+  if(runDurationInSeconds == 0) return
   formObj.easyRun = runDurationInSeconds / formObj.length
   formObj.tempoRun = formObj.easyRun - 20
   formObj.vo2Max = (runDurationInSeconds - 75) / formObj.length
@@ -151,7 +161,7 @@ const handleCalculation = () => {
 const formatInMinutesSeconds = (duration) => {
   const minutes = Math.floor(duration / 60)
   const seconds = Math.round(duration % 60)
-  return `${minutes}:${seconds.toString().padStart(2, '0')}`
+  return `${minutes}:${seconds.toString().padStart(2, '0')} ${isMetric.value? "min/km" : "min/mi"}`
 }
 
 const placeHolderPaces = computed(() => [
