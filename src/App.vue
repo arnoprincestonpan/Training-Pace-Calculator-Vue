@@ -79,33 +79,6 @@ import CardPaceResult from './components/CardPaceResult.vue';
 const isMetric = ref(true);
 const isMetricPace = ref(true);
 
-const placeHolderPaces = [
-  {
-    name: "Easy Pace",
-    pace: "69.69 min/hr"
-  },
-  {
-    name: "Easy Pace",
-    pace: "69.69 min/hr"
-  },
-  {
-    name: "Easy Pace",
-    pace: "69.69 min/hr"
-  },
-  {
-    name: "Easy Pace",
-    pace: "69.69 min/hr"
-  },
-  {
-    name: "Easy Pace",
-    pace: "69.69 min/hr"
-  },
-  {
-    name: "Easy Pace",
-    pace: "69.69 min/hr"
-  },
-]
-
 const initialFormObj = {
   length: 0,
   metric: isMetric,
@@ -167,12 +140,45 @@ const handleMeasurementSystemToggle = () => {
 const handleCalculation = () => {
   const runDurationInSeconds = formObj.timeInHours * 3600 + formObj.timeInMinutes * 60 + formObj.timeInSeconds
   formObj.easyRun = runDurationInSeconds / formObj.length
-  formObj.tempoRun = (runDurationInSeconds - 20) / formObj.length
+  formObj.tempoRun = formObj.easyRun - 20
   formObj.vo2Max = (runDurationInSeconds - 75) / formObj.length
   formObj.speedForm = (runDurationInSeconds - 105) / formObj.length
   formObj.longRun = (runDurationInSeconds + 15) / formObj.length
 
   console.log('results: ', formObj)
 }
+
+const formatInMinutesSeconds = (duration) => {
+  const minutes = Math.floor(duration / 60)
+  const seconds = Math.round(duration % 60)
+  return `${minutes}:${seconds.toString().padStart(2, '0')}`
+}
+
+const placeHolderPaces = computed(() => [
+    {
+    name: "Easy Pace",
+    pace: formatInMinutesSeconds(formObj.easyRun)
+  },
+  {
+    name: "Tempo Run",
+    pace: formatInMinutesSeconds(formObj.tempoRun)
+  },
+  {
+    name: "VO2 Max",
+    pace: formatInMinutesSeconds(formObj.vo2Max)
+  },
+  {
+    name: "Speed Form",
+    pace: formatInMinutesSeconds(formObj.speedForm)
+  },
+  {
+    name: "Long Run",
+    pace: formatInMinutesSeconds(formObj.longRun)
+  },
+  {
+    name: "Yasso 800s",
+    pace: formatInMinutesSeconds(formObj.easyRun)
+  },
+])
 
 </script>
