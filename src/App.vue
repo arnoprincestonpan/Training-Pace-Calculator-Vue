@@ -91,7 +91,6 @@ const initialFormObj = {
   vo2Max: "",
   speedForm: "",
   longRun: "",
-  yasso800s: "",
 }
 
 const formObj = reactive({
@@ -146,14 +145,14 @@ const handleMeasurementDisplayToggle = () => {
 }
 
 const handleCalculation = () => {
-  if(formObj.length == "") return
+  if(formObj.length === "" || formObj.length === 0) return
   const runDurationInSeconds = formObj.timeInHours * 3600 + formObj.timeInMinutes * 60 + formObj.timeInSeconds
-  if(runDurationInSeconds == 0) return
+  if(runDurationInSeconds === 0) return
   formObj.easyRun = runDurationInSeconds / formObj.length
-  formObj.tempoRun = formObj.easyRun - 20
-  formObj.vo2Max = (runDurationInSeconds - 75) / formObj.length
-  formObj.speedForm = (runDurationInSeconds - 105) / formObj.length
-  formObj.longRun = (runDurationInSeconds + 15) / formObj.length
+  formObj.longRun = formObj.easyRun + 30
+  formObj.tempoRun = formObj.easyRun - ((45+20)/2)
+  formObj.vo2Max = formObj.easyRun - ((75+45)/2)
+  formObj.speedForm = formObj.easyRun - ((120+60)/2)
 
   console.log('results: ', formObj)
 }
@@ -166,7 +165,7 @@ const formatInMinutesSeconds = (duration) => {
 
 const placeHolderPaces = computed(() => [
     {
-    name: "Easy Pace",
+    name: "Easy Run",
     pace: formatInMinutesSeconds(formObj.easyRun)
   },
   {
@@ -184,10 +183,6 @@ const placeHolderPaces = computed(() => [
   {
     name: "Long Run",
     pace: formatInMinutesSeconds(formObj.longRun)
-  },
-  {
-    name: "Yasso 800s",
-    pace: formatInMinutesSeconds(formObj.easyRun)
   },
 ])
 
