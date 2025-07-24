@@ -52,10 +52,17 @@
               </span>
               <IconToggle></IconToggle>
             </button>
-            <button class="col-sm btn btn-success">Calculate</button>
+            <button @click="handleCalculation" class="col-sm btn btn-success">Calculate</button>
           </div>
         </div>
       </form>
+    </section>
+    <section>
+      <div class="row mt-1">
+        <div class="col-md-4" v-for="(placeHolderPace, index) in placeHolderPaces" :key="index">
+          <CardPaceResult class="col mt-1 mb-1" :title="placeHolderPace.name" :item="placeHolderPace.pace"></CardPaceResult>
+        </div>
+      </div>
     </section>
     <section>
       <h2 class="text-center bg-light border p-1 mt-1 mb-1 rounded">Training Pace Tips</h2>
@@ -67,9 +74,37 @@
 import { ref, reactive, computed } from 'vue'
 import IconToggle from './components/icons/IconToggle.vue';
 import AccordionsListQuestionsAndAnswers from './components/AccordionsListQuestionsAndAnswers.vue';
+import CardPaceResult from './components/CardPaceResult.vue';
 
 const isMetric = ref(true);
 const isMetricPace = ref(true);
+
+const placeHolderPaces = [
+  {
+    name: "Easy Pace",
+    pace: "69.69 min/hr"
+  },
+  {
+    name: "Easy Pace",
+    pace: "69.69 min/hr"
+  },
+  {
+    name: "Easy Pace",
+    pace: "69.69 min/hr"
+  },
+  {
+    name: "Easy Pace",
+    pace: "69.69 min/hr"
+  },
+  {
+    name: "Easy Pace",
+    pace: "69.69 min/hr"
+  },
+  {
+    name: "Easy Pace",
+    pace: "69.69 min/hr"
+  },
+]
 
 const initialFormObj = {
   length: 0,
@@ -80,11 +115,16 @@ const initialFormObj = {
   timeInSeconds: 0,
   easyRun: "",
   tempoRun: "",
+  vo2Max: "",
+  speedForm: "",
+  longRun: "",
+  yasso800s: "",
 }
 
 const formObj = reactive({
   ...initialFormObj
 })
+
 const presetsObj = computed(() => [
   {
     name: "half marathon",
@@ -122,6 +162,17 @@ const handleMeasurementSystemToggle = () => {
     }
   }
   isMetric.value = !isMetric.value;
+}
+
+const handleCalculation = () => {
+  const runDurationInSeconds = formObj.timeInHours * 3600 + formObj.timeInMinutes * 60 + formObj.timeInSeconds
+  formObj.easyRun = runDurationInSeconds / formObj.length
+  formObj.tempoRun = (runDurationInSeconds - 20) / formObj.length
+  formObj.vo2Max = (runDurationInSeconds - 75) / formObj.length
+  formObj.speedForm = (runDurationInSeconds - 105) / formObj.length
+  formObj.longRun = (runDurationInSeconds + 15) / formObj.length
+
+  console.log('results: ', formObj)
 }
 
 </script>
