@@ -148,11 +148,14 @@ const handleCalculation = () => {
   if(formObj.length === "" || formObj.length === 0) return
   const runDurationInSeconds = formObj.timeInHours * 3600 + formObj.timeInMinutes * 60 + formObj.timeInSeconds
   if(runDurationInSeconds === 0) return
-  formObj.easyRun = runDurationInSeconds / formObj.length
+  formObj.easyRun = (runDurationInSeconds / formObj.length)
   formObj.longRun = formObj.easyRun + 30
   formObj.tempoRun = formObj.easyRun - ((45+20)/2)
+  if(formObj.tempoRun < 0) formObj.tempoRun = 0;
   formObj.vo2Max = formObj.easyRun - ((75+45)/2)
+  if(formObj.vo2Max < 0) formObj.vo2Max = 0;
   formObj.speedForm = formObj.easyRun - ((120+60)/2)
+  if(formObj.speedForm < 0) formObj.speedForm = 0;
 
   console.log('results: ', formObj)
 }

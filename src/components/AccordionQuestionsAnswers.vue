@@ -4,13 +4,13 @@
             <button class="accordion-button" type="button" data-bs-toggle="collapse"
                 :data-bs-target="`#panelsStayOpen-collapse` + accordionItemId" aria-expanded="true"
                 :aria-controls="`panelsStayOpen-collapse` + accordionItemId">
-                {{ props.title }}
+                {{ title }}
             </button>
         </h2>
         <div :id="`panelsStayOpen-collapse` + accordionItemId" class="accordion-collapse collapse"
             v-bind:class="descriptionCollasped ? '' : 'show'">
             <div class="accordion-body">
-                {{ props.description }}
+                {{ description }}
             </div>
         </div>
     </div>

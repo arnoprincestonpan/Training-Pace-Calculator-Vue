@@ -1,10 +1,10 @@
 <template>
     <div class="card" style="width: auto">
         <div class="card-header">
-            {{ props.title }}
+            {{ title }}
         </div>
         <ul class="list-group list-group-flush">
-            <li class="list-group-item">{{ props.item }}</li>
+            <li class="list-group-item">{{ item }}</li>
         </ul>
     </div>
 </template>
